@@ -11,7 +11,7 @@ class Interpreter {
 
     fun run(): Boolean {
         var counter = 0
-        line.init(program?.input())
+        line.init(program?.input)
         do {
             val command = program?.command(Pair(stateIndex, line.char))
             command?.let {

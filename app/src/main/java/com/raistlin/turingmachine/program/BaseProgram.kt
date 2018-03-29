@@ -4,7 +4,7 @@ import com.raistlin.turingmachine.Command
 
 interface BaseProgram {
 
-    fun input(): String
+    val input: String
 
     fun command(state: Pair<Int, Char>): Command?
 

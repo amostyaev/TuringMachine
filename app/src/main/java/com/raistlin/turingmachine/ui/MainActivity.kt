@@ -3,10 +3,11 @@ package com.raistlin.turingmachine.ui
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import com.raistlin.turingmachine.Interpreter
 import com.raistlin.turingmachine.R
-import com.raistlin.turingmachine.program.PredefinedProgram
+import com.raistlin.turingmachine.program.FileProgram
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,9 +15,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<Button>(R.id.button).setOnClickListener {
+        findViewById<Button>(R.id.main_button).setOnClickListener {
             val interpreter = Interpreter()
-            interpreter.program = PredefinedProgram()
+            //interpreter.program = PredefinedProgram()
+            interpreter.program = FileProgram(assets.open(findViewById<EditText>(R.id.main_edit).text.toString()))
             interpreter.run()
             Toast.makeText(baseContext, interpreter.line.items.toString(), Toast.LENGTH_LONG).show()
         }
