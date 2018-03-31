@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import com.raistlin.turingmachine.Interpreter
 import com.raistlin.turingmachine.R
 import com.raistlin.turingmachine.program.FileProgram
+import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() {
+
+    private var tape: TapeWidget? = null
+    private var speed = 500L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,8 +22,14 @@ class MainActivity : AppCompatActivity() {
             val interpreter = Interpreter()
             //interpreter.program = PredefinedProgram()
             interpreter.program = FileProgram(assets.open(findViewById<EditText>(R.id.main_edit).text.toString()))
-            interpreter.run()
-            Toast.makeText(baseContext, interpreter.line.items.toString(), Toast.LENGTH_LONG).show()
+            interpreter.init()
+            timer("run", true, 0, speed, {
+                val finished = interpreter.step()
+                runOnUiThread { tape?.showLine(interpreter.lineItems(), interpreter.stateIndex) }
+                if (finished) cancel()
+            })
         }
+
+        tape = findViewById(R.id.main_tape)
     }
 }
