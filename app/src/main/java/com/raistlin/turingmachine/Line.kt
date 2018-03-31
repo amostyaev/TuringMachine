@@ -16,6 +16,8 @@ class Line {
         }
 
     fun init(input: String?) {
+        currentPosition = 0
+        items.clear()
         for (c in input.orEmpty()) {
             items.add(c)
         }

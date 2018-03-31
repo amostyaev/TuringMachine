@@ -4,14 +4,12 @@ import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
 import android.view.Gravity
-import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.raistlin.turingmachine.R
 
-class TapeWidget(context: Context?, attrs: AttributeSet?) : HorizontalScrollView(context, attrs) {
+class TapeWidget(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
-    private var container: LinearLayout? = null
     private val elements: ArrayList<TextView> = arrayListOf()
     private var initialized = false
 
@@ -31,11 +29,6 @@ class TapeWidget(context: Context?, attrs: AttributeSet?) : HorizontalScrollView
             addDefaultViews(r - l)
             initialized = true
         }
-    }
-
-    override fun onFinishInflate() {
-        super.onFinishInflate()
-        container = getChildAt(0) as LinearLayout
     }
 
     private fun addDefaultViews(width: Int) {
@@ -62,7 +55,7 @@ class TapeWidget(context: Context?, attrs: AttributeSet?) : HorizontalScrollView
         }
         elem.setBackgroundResource(R.drawable.tape_element_border)
         elements.add(elem)
-        container?.addView(elem)
+        addView(elem)
     }
 
 }

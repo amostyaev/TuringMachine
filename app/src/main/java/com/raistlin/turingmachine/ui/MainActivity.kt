@@ -11,26 +11,35 @@ import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() {
 
+    private val interpreter = Interpreter()
+
     private var tape: TapeWidget? = null
+    private var table: TableWidget? = null
+
     private var speed = 500L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<Button>(R.id.main_button).setOnClickListener {
-            val interpreter = Interpreter()
+        tape = findViewById(R.id.main_tape)
+        table = findViewById(R.id.main_table)
+
+        findViewById<Button>(R.id.main_button_load).setOnClickListener {
             //interpreter.program = PredefinedProgram()
-            interpreter.program = FileProgram(assets.open(findViewById<EditText>(R.id.main_edit).text.toString()))
+            val program = FileProgram(assets.open(findViewById<EditText>(R.id.main_edit).text.toString()))
+            interpreter.program = program
             interpreter.init()
             tape?.showLine(interpreter.lineItems(), interpreter.lineIndex())
+            table?.loadProgram(program)
+        }
+
+        findViewById<Button>(R.id.main_button_start).setOnClickListener {
             timer("run", true, speed, speed, {
                 val finished = interpreter.step()
                 runOnUiThread { tape?.showLine(interpreter.lineItems(), interpreter.lineIndex()) }
                 if (finished) cancel()
             })
         }
-
-        tape = findViewById(R.id.main_tape)
     }
 }

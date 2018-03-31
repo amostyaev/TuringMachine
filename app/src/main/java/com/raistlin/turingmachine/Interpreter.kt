@@ -12,6 +12,7 @@ class Interpreter {
 
     fun init() {
         counter = 0
+        stateIndex = 1
         line.init(program?.input)
     }
 

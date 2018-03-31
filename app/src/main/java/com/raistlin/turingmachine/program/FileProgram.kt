@@ -3,7 +3,7 @@ package com.raistlin.turingmachine.program
 import com.raistlin.turingmachine.Command
 import java.io.InputStream
 
-class FileProgram(inputStream: InputStream) : BaseProgram {
+class FileProgram(inputStream: InputStream) : BaseProgram() {
 
     companion object {
         const val RROGRAM_END = "cm0"
@@ -14,14 +14,8 @@ class FileProgram(inputStream: InputStream) : BaseProgram {
         const val SYMBOL_FINAL = '!'
     }
 
-    private val commands = mutableMapOf<Pair<Int, Char>, Command>()
-
     override var input = ""
         private set
-
-    override fun command(state: Pair<Int, Char>): Command? {
-        return commands[state]
-    }
 
     private fun readTrmFile(inputStream: InputStream) {
         val lines = inputStream.bufferedReader().readLines();
@@ -38,7 +32,7 @@ class FileProgram(inputStream: InputStream) : BaseProgram {
                     val symbolTo = if (command[0] != SYMBOL_EMPTY) command[0] else Command.EMPTY_SYMBOL
                     val dir = command[1]
                     if (dir == SYMBOL_FINAL) {
-                        commands[Pair(state, symbol)] = Command(symbolTo, Command.DirectionType.No, Command.FINAL_STATE)
+                        addCommand(Pair(state, symbol), Command(symbolTo, Command.DirectionType.No, Command.FINAL_STATE))
                     } else {
                         val direction = parseDirection(dir)
                         val stateChar = command[2]
@@ -47,7 +41,7 @@ class FileProgram(inputStream: InputStream) : BaseProgram {
                             stateChar.isLetter() -> stateChar.toLowerCase() - 'a'
                             else -> state
                         }
-                        commands[Pair(state, symbol)] = Command(symbolTo, direction, stateTo)
+                        addCommand(Pair(state, symbol), Command(symbolTo, direction, stateTo))
                     }
                 }
             }
@@ -55,12 +49,13 @@ class FileProgram(inputStream: InputStream) : BaseProgram {
     }
 
     private fun parseDirection(char: Char): Command.DirectionType {
-        return when (char) {
+        return Command.DirectionType.valueOf(char) ?: Command.DirectionType.No
+        /*return when (char) {
             SYMBOL_LEFT -> Command.DirectionType.Left
             SYMBOL_RIGHT -> Command.DirectionType.Right
             SYMBOL_STAY -> Command.DirectionType.No
             else -> Command.DirectionType.No
-        }
+        }*/
     }
 
     init {

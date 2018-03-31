@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Turing</string>
+    <string name="app_name">Turing Machine</string>
+    <string name="button_load">Load</string>
+    <string name="button_start">Start</string>
 </resources>
