@@ -2,4 +2,6 @@
     <string name="app_name">Turing Machine</string>
     <string name="button_load">Load</string>
     <string name="button_start">Start</string>
+    <string name="button_stop">Stop</string>
+    <string name="info_finished">Execution finished</string>
 </resources>
