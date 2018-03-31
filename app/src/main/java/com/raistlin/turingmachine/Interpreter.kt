@@ -37,4 +37,8 @@ class Interpreter {
         }
         return result
     }
+
+    fun lineIndex(): Int {
+        return line.currentPosition
+    }
 }

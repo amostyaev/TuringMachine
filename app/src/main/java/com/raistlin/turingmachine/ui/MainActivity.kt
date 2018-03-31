@@ -23,9 +23,10 @@ class MainActivity : AppCompatActivity() {
             //interpreter.program = PredefinedProgram()
             interpreter.program = FileProgram(assets.open(findViewById<EditText>(R.id.main_edit).text.toString()))
             interpreter.init()
-            timer("run", true, 0, speed, {
+            tape?.showLine(interpreter.lineItems(), interpreter.lineIndex())
+            timer("run", true, speed, speed, {
                 val finished = interpreter.step()
-                runOnUiThread { tape?.showLine(interpreter.lineItems(), interpreter.stateIndex) }
+                runOnUiThread { tape?.showLine(interpreter.lineItems(), interpreter.lineIndex()) }
                 if (finished) cancel()
             })
         }
