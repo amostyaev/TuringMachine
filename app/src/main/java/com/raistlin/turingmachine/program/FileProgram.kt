@@ -35,7 +35,7 @@ class FileProgram(inputStream: InputStream) : BaseProgram() {
                         val stateChar = command[2]
                         val stateTo = when {
                             stateChar.isDigit() -> stateChar - '0'
-                            stateChar.isLetter() -> stateChar.toLowerCase() - 'a'
+                            stateChar.isLetter() -> stateChar.toLowerCase() - 'a' + 10
                             else -> state
                         }
                         addCommand(Pair(state, symbol), Command(symbolTo, direction, stateTo))

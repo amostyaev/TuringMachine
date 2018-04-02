@@ -28,7 +28,7 @@ class Interpreter {
             }
             stateIndex = it.state
         }
-        return stateIndex == Command.FINAL_STATE && (++counter <= program?.maxSteps().let { it } ?: 0)
+        return stateIndex == Command.FINAL_STATE && (++counter <= program?.maxSteps() ?: 0)
     }
 
     fun updateLine(items: String) {
