@@ -4,4 +4,8 @@
     <string name="button_start">Start</string>
     <string name="button_stop">Stop</string>
     <string name="info_finished">Execution finished</string>
+
+    <string name="dialog_tape_title">Set tape</string>
+    <string name="dialog_tape_set">Set</string>
+    <string name="dialog_tape_cancel">Cancel</string>
 </resources>

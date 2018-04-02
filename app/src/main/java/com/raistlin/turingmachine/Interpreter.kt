@@ -31,6 +31,10 @@ class Interpreter {
         return stateIndex == Command.FINAL_STATE && (++counter <= program?.maxSteps().let { it } ?: 0)
     }
 
+    fun updateLine(items: String) {
+        line.update(items)
+    }
+
     fun lineItems(): List<Char> {
         val result = mutableListOf<Char>()
         for (i in 0 until line.items.size) {

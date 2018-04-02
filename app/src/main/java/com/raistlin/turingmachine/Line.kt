@@ -17,6 +17,10 @@ class Line {
 
     fun init(input: String?) {
         currentPosition = 0
+        update(input)
+    }
+
+    fun update(input: String?) {
         items.clear()
         for (c in input.orEmpty()) {
             items.add(c)

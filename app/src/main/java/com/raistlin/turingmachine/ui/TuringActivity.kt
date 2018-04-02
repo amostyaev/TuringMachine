@@ -1,7 +1,9 @@
 package com.raistlin.turingmachine.ui
 
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -12,6 +14,7 @@ import com.raistlin.turingmachine.R
 import com.raistlin.turingmachine.program.FileProgram
 import java.util.*
 import kotlin.concurrent.timer
+
 
 class TuringActivity : AppCompatActivity() {
 
@@ -33,6 +36,22 @@ class TuringActivity : AppCompatActivity() {
         table = findViewById(R.id.main_table)
         state = findViewById(R.id.mane_state)
         launchButton = findViewById(R.id.main_button_start)
+
+        tape?.setOnLongClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(getString(R.string.dialog_tape_title))
+            val input = EditText(this)
+            input.inputType = InputType.TYPE_CLASS_TEXT
+            input.setText(interpreter.lineItems().joinToString(separator = "", transform = { it.toString() }))
+            builder.setView(input)
+            builder.setPositiveButton(getText(R.string.dialog_tape_set), { _, _ ->
+                interpreter.updateLine(input.text.toString())
+                tape?.showLine(interpreter.lineItems(), interpreter.lineIndex())
+            })
+            builder.setNegativeButton(getText(R.string.dialog_tape_cancel), { dialog, _ -> dialog.cancel() })
+            builder.show()
+            true
+        }
 
         findViewById<Button>(R.id.main_button_load).setOnClickListener {
             val program = FileProgram(assets.open(findViewById<EditText>(R.id.main_edit).text.toString()))
@@ -65,7 +84,6 @@ class TuringActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun updateState() {
