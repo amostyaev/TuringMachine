@@ -8,9 +8,6 @@ class FileProgram(inputStream: InputStream) : BaseProgram() {
     companion object {
         const val RROGRAM_END = "cm0"
         const val SYMBOL_EMPTY = '^'
-        const val SYMBOL_LEFT = 'L'
-        const val SYMBOL_RIGHT = 'R'
-        const val SYMBOL_STAY = 'N'
         const val SYMBOL_FINAL = '!'
     }
 
@@ -50,12 +47,6 @@ class FileProgram(inputStream: InputStream) : BaseProgram() {
 
     private fun parseDirection(char: Char): Command.DirectionType {
         return Command.DirectionType.valueOf(char) ?: Command.DirectionType.No
-        /*return when (char) {
-            SYMBOL_LEFT -> Command.DirectionType.Left
-            SYMBOL_RIGHT -> Command.DirectionType.Right
-            SYMBOL_STAY -> Command.DirectionType.No
-            else -> Command.DirectionType.No
-        }*/
     }
 
     init {
